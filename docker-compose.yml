@@ -1,0 +1,30 @@
+#USE .env FILE: docker compose --env-file .env up
+version: '3'
+
+services:
+  database:
+    ports:
+      - "${DB_PORT}:3306"
+    image: docker.io/bitnami/mariadb:10.6
+    volumes:
+      - ./data:/bitnami/mariadb/data:rw
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - "MARIADB_USER=${DB_USER}"
+      - "MARIADB_PASSWORD=${DB_PASS}"
+      - "MARIADB_DATABASE=${DB_BASE}"
+      - "MARIADB_ROOT_PASSWORD=${DB_ROOT}"
+  app:
+    image: docker.io/bitnami/laravel:9
+    ports:
+      - 8001:8000
+    environment:
+      - DB_HOST=database
+      - "DB_PORT=${DB_PORT}"
+      - "DB_USERNAME=${DB_USER}"
+      - "DB_DATABASE=${DB_BASE}"
+      - "DB_PASSWORD=${DB_PASS}"
+    volumes:
+      - ./api:/app
+    depends_on:
+      - database
