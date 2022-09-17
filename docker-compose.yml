@@ -5,7 +5,7 @@ services:
   database:
     ports:
       - "${DB_PORT}:3306"
-    image: docker.io/bitnami/mariadb:10.6
+    image: docker.io/bitnami/mariadb:latest
     volumes:
       - ./data:/bitnami/mariadb/data:rw
     environment:
@@ -15,7 +15,7 @@ services:
       - "MARIADB_DATABASE=${DB_BASE}"
       - "MARIADB_ROOT_PASSWORD=${DB_ROOT}"
   app:
-    image: docker.io/bitnami/laravel:9
+    image: docker.io/bitnami/laravel:latest
     ports:
       - "${API_PORT}:8000"
     environment:
