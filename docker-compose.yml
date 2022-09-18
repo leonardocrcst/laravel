@@ -1,5 +1,5 @@
 #USE .env FILE: docker compose --env-file .env up
-version: '3'
+version: '3.7'
 
 services:
   database:
@@ -15,7 +15,9 @@ services:
       - "MARIADB_DATABASE=${DB_BASE}"
       - "MARIADB_ROOT_PASSWORD=${DB_ROOT}"
   app:
-    image: docker.io/bitnami/laravel:latest
+    #image: docker.io/bitnami/laravel:latest
+    build:
+      context: .
     ports:
       - "${APP_PORT}:8000"
     environment:
